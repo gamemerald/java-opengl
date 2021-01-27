@@ -1,37 +1,16 @@
-package renderEngine;
+import org.lwjgl.opengl.Display;
+import renderEngine.DisplayManager;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.*;
+public class MainGameLoop {
+    public static void main(String[] args) {
+        DisplayManager.createDisplay();
 
-public class DisplayManager {
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 720;
-    private static final int FPS_CAP = 120;
-
-    public static void createDisplay (){
-
-        ContextAttribs attribs = new ContextAttribs(3,2);
-        attribs.withForwardCompatible(true);
-        attribs.withProfileCore(true);
-
-        try {
-            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
-            Display.create(new PixelFormat(), attribs);
-            Display.setTitle("Our First Display!");
-        } catch (LWJGLException e) {
-            e.printStackTrace();
+        while(!Display.isCloseRequested()){
+            //game logic
+            //render
+            DisplayManager.updateDisplay();
         }
 
-        GL11.glViewport(0, 0, WIDTH, HEIGHT);
-
-    }
-
-    public static void updateDisplay(){
-        Display.sync(FPS_CAP);
-        Display.update();
-    }
-
-    public static void closeDisplay (){
-        Display.destroy();
+        DisplayManager.closeDisplay();
     }
 }
